@@ -1,0 +1,32 @@
+/* 最初の雫のやつううううう */
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #c0f4fb;
+}
+
+canvas {
+    display: block;
+}
+
+.start {
+    width: 200px;
+    padding: 10px;
+    font-size: 35px;
+    position: absolute;
+    display: none; /* 初めは非表示になるやつ */
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+
+/* 追加でフェードインしてみた */
+/* .fade-in {
+    font-size: 40px;
+    opacity: 0;
+    animation: fadeIn 2s ease-in forwards;
+}
+    
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+} */
