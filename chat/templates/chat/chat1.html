@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Chat Room
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>ちゃっと</h2>
+    <div id="chat-log" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: scroll;">
+      {% for message in messages %}
+        <p>
+          <strong>{{ message.user.username }}:</strong> {{ message.content }}
+          <small class="text-muted">{{ message.timestamp }}</small>
+        </p>
+      {% endfor %}
+    </div>
+    <form id="chat-form" class="d-flex">
+      <input id="chat-message-input" type="text" class="form-control me-2" />
+      <button id="chat-message-submit" type="button" class="btn btn-primary">送信</button>
+    </form>
+    <p id="error-message" class="text-danger mt-2"></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const chatInput = document.getElementById('chat-message-input')
+      const chatSubmit = document.getElementById('chat-message-submit')
+      const errorMessage = document.getElementById('error-message')
+    
+      chatSubmit.addEventListener('click', function () {
+        const message = chatInput.value.trim()
+        if (message === '') {
+          errorMessage.textContent = 'Message cannot be empty.'
+          return
+        }
+    
+        fetch('/chat/send_message/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: JSON.stringify({ message: message })
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to send message.')
+            }
+            return response.json()
+          })
+          .then(() => {
+            window.location.reload()
+          })
+          .catch((error) => {
+            errorMessage.textContent = 'Error: ' + error.message
+          })
+      })
+    })
+  </script>
+{% endblock %}

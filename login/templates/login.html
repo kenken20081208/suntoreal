@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}
+Board | login
+{% endblock %}
+{% block content %}
+<div class='container'>
+    <div class='content'>
+        {% if message %}
+        <ul>
+            <li>{{ message }}</li>
+        </ul>
+        {% endif %}
+        <!-- エラー表示 -->
+        {% if form.errors %}
+        <ul>
+            {% for field, errors in form.errors.items %}
+            <li>{{ field.label }}: {{ errors|join:", " }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post" class="mb-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="mt-3">Login</button>
+        </form>
+        <div class="mb-3">
+            <a href="{% url 'index' %}">Login as Guest</a>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
