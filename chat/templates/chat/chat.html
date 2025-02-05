@@ -162,12 +162,27 @@
 
     <!-- 投稿フォーム -->
     <div class="container">
-        <h2>💧 投稿しよう！</h2>
-        <textarea id="postInput" placeholder="ここに投稿を書く..."></textarea>
+       <!-- 投稿フォーム -->
+        {% comment %} <div class="container"> {% endcomment %}
+            {% comment %} <form action="{% url 'chat:create' %}" method="post">
+                <h2>💧 投稿しよう！</h2>
+                <input class="meal" type="text" name="toukou" placeholder="ここに投稿を書く...">
+                {% csrf_token %}
+                <div class="button-group">
+                    <button type="submit">投稿する</button>
+                </div>
+            </form>
+        </div> {% endcomment %}
 
-        <div class="button-group">
-            <button class="post-btn" onclick="addPost()">投稿する</button>
-        </div>
+        <form action="{% url 'chat:create' %}" method="post">
+            <h2>💧 投稿しよう！</h2>
+            <input class="meal" type="text" name="toukou" placeholder="ここに投稿を書く...">
+            {% csrf_token %}
+
+            <div class="button-group">
+                <button type="submit">投稿する</button>
+            </div>
+        </form> 
     </div>
 
     <!-- 投稿一覧 -->
@@ -175,9 +190,9 @@
         <h2>📋 投稿一覧</h2>
         <div id="postContainer">
             <!-- Djangoで繰り返しDBがら取得して表示 -->
-            {% for message in messages %}
+            {% for toukou in all_toukou %}
             <div class="post">
-              <p>{{ message.content }}</p>
+              <p>{{ toukou.character }}</p>
               <button class="delete-btn">削除</button>
           </div>
           {% endfor %}
